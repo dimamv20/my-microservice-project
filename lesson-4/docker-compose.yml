@@ -4,13 +4,21 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./app:/app
+    env_file:
+      - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:15
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   nginx:
     image: nginx:latest

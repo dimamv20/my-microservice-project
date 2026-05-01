@@ -1,0 +1,15 @@
+controller:
+  serviceType: LoadBalancer
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+
+agent:
+  enabled: true
+persistence:
+  enabled: false
